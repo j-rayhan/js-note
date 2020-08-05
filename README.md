@@ -151,4 +151,82 @@ sayHi(); // shows "Hello, World!" as alert in browser.
     console.log(Sequence.getNextValue()); // 2
     console.log(Sequence.getCurrentValue()); // 2
    ```
-   9. 
+   9. The most important thing about an IIFE is that it can return a value/reference and you can assign that to a variable.
+   
+## JavaScript Closures 
+    - A closure gives you access to an outer function’s scope from an inner function. In JavaScript, closures are created every time a function is created, at function creation time.
+    1. Practical example with closures
+    ```
+    let sequence = () => {
+        let count = 0;
+
+        let counterBag = {};
+
+        counterBag.increment = function () {
+            count = count + 1;
+        };
+
+        counterBag.decrement = function () {
+            count = count - 1;
+        };
+
+        counterBag.getValue = function () {
+            return count;
+        };
+
+        // bag contains all the function references.
+        // Think of an entire family's karmic bag.
+
+        return counterBag;
+    };
+
+    let getSequence = sequence();
+    // we don't need sequence any more.
+    // We will see a better pattern instead of this in the next example.
+    sequence = null;
+
+    let a = getSequence.getValue(); // 0
+    getSequence.increment();
+    getSequence.increment();
+    getSequence.increment();
+    let b = getSequence.getValue(); // 3
+    getSequence.decrement();
+    let c = getSequence.getValue(); // 2
+
+    console.log('A--->', a, '\nB--->', b, '\nC--->', c)
+    ```
+    
+    2. Example with IIFE
+    ```
+    let sequenceObject = (() => {
+        let count = 0;
+
+        let counterBag = {};
+
+        counterBag.increment = function () {
+            count = count + 1;
+        };
+
+        counterBag.decrement = function () {
+            count = count - 1;
+        };
+
+        counterBag.getValue = function () {
+            return count;
+        };
+
+        // bag contains all the function references.
+        // Think of an entire family's karmic bag.
+
+        return counterBag;
+    })();
+
+    let a = sequenceObject.getValue(); // 0
+    sequenceObject.increment();
+    sequenceObject.increment();
+    let b = sequenceObject.getValue(); // 2
+    sequenceObject.decrement();
+    let c = sequenceObject.getValue(); // 1
+
+    console.log('A--->', a, '\nB--->', b, '\nC--->', c)
+    ```
