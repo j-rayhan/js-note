@@ -154,7 +154,7 @@ sayHi(); // shows "Hello, World!" as alert in browser.
    9. The most important thing about an IIFE is that it can return a value/reference and you can assign that to a variable.
    
 ## JavaScript Closures 
-    - A closure gives you access to an outer function’s scope from an inner function. In JavaScript, closures are created every time a function is created, at function creation time.
+   A closure gives you access to an outer function’s scope from an inner function. In JavaScript, closures are created every time a function is created, at function creation time.
     1. Practical example with closures
     ```
     let sequence = () => {
@@ -230,3 +230,36 @@ sayHi(); // shows "Hello, World!" as alert in browser.
 
     console.log('A--->', a, '\nB--->', b, '\nC--->', c)
     ```
+    
+    
+## JS Web crawling
+    1. Load jQuery with Javascript and use jQuery
+```
+Test site: http://www.unicode.org/emoji/charts/full-emoji-list.html
+// Immediately-invoked function expression
+(function() {
+    // Load the script
+    var script = document.createElement("SCRIPT");
+    script.src = 'https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js';
+    script.type = 'text/javascript';
+    script.onload = function() {
+        var $ = window.jQuery;
+        // Use $ here...
+    };
+    document.getElementsByTagName("head")[0].appendChild(script);
+})();
+```
+  2. Store and copy data.
+```
+let mydata = []
+('table > tbody  > tr').each(function(index) { 
+   mydata[index] = {
+      'code': jQuery(this).find('td:nth-child(2)').text(),
+      'browser': jQuery(this).find('td:nth-child(3)').text(),
+      'fb': jQuery(this).find('td:nth-child(6) > img').attr('src'),
+      'name': jQuery(this).find('td:nth-child(15)').text(),
+   }
+});
+
+copy(mydata);
+```
